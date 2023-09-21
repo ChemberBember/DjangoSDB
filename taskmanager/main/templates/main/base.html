@@ -1,0 +1,220 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'css/css2/style.css'%}">
+    <title>Django DataBase</title>
+</head>
+
+<body>
+    <div class="container">
+{% block sidebar %}
+<aside>
+            <div class="toggle">
+                <div class="logo">
+                    <img src="{%static 'images/DB Logo.png'%}">
+                    <h2>Django<span class="danger">DB</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">
+                        close
+                    </span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                {% if request.path == '/dashboard' %}
+                <a href="dashboard" class="activedashboard">
+                    <span class="material-icons-sharp">
+                        dashboard
+                    </span>
+                    <h3>Dashboard</h3>
+                </a>
+                {% else %}
+                <a href="dashboard">
+                    <span class="material-icons-sharp">
+                        dashboard
+                    </span>
+                    <h3>Dashboard</h3>
+                </a>
+                {% endif %}
+                {% if request.path == '/users' %}
+                <a href="users" class="active">
+                    <span class="material-icons-sharp">
+                        person_outline
+                    </span>
+                    <h3>Profile</h3>
+                </a>
+                {% else %}
+                <a href="users">
+                    <span class="material-icons-sharp">
+                        person_outline
+                    </span>
+                    <h3>Profile</h3>
+                </a>
+                {% endif %}
+                {% if request.path == '/analytics' %}
+                <a href="analytics" class="active">
+                    <span class="material-icons-sharp">
+                        insights
+                    </span>
+                    <h3>Analytics</h3>
+                </a>
+                {% else %}
+                <a href="analytics">
+                    <span class="material-icons-sharp">
+                        insights
+                    </span>
+                    <h3>Analytics</h3>
+                </a>
+                {% endif %}
+                {% if request.path == '/settings' %}
+                <a href="settings" class="active">
+                    <span class="material-icons-sharp">
+                        settings
+                    </span>
+                    <h3>Settings</h3>
+                </a>
+                {% else %}
+                <a href="settings">
+                    <span class="material-icons-sharp">
+                        settings
+                    </span>
+                    <h3>Settings</h3>
+                </a>
+                {% endif %}
+                <a href="{%url 'logout'%}">
+                    <span class="material-icons-sharp">
+                        logout
+                    </span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+        </aside>
+{% endblock %}
+<main>
+{% block main %}
+    <h1>
+    {%block title%}
+    Main Block
+    {%endblock%}
+    </h1>
+
+{% endblock %}
+    </main>
+        {% block rightsection %}
+        <div class="right-section">
+            <div class="nav">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">
+                        menu
+                    </span>
+                </button>
+                <div class="dark-mode">
+                    <span class="material-icons-sharp active">
+                        light_mode
+                    </span>
+                    <span class="material-icons-sharp">
+                        dark_mode
+                    </span>
+                </div>
+                {% if request.user.is_authenticated %}
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>{{user.username}}</b></p>
+                        {% if user.username == "admin" %}
+                        <small class="text-muted">Admin</small>
+                        {% else %}
+                        <small class="text-muted">User</small>
+                        {%endif%}
+                    </div>
+                    <div class="profile-photo">
+                        <img src="images/profile-1.jpg">
+                    </div>
+                </div>
+                {% else %}
+                <a class="loginbtn" href="login">Login</a>
+                <a class="createacc" href="registration">Create account</a>
+
+            {%endif%}
+
+            </div>
+            {% block rightuser %}
+            <div class="user-profile">
+                <div class="logo">
+                    <img src="{%static 'images/DB Logo.png'%}">
+                    <h2>{GitHubName}</h2>
+                    <p>{GitHubDesc}</p>
+                </div>
+            </div>
+
+            <div class="reminders">
+                <div class="header">
+                    <h2>GitUpdates</h2>
+                    <span class="material-icons-sharp">
+                        notifications_none
+                    </span>
+                </div>
+
+                <div class="notification">
+                    <div class="icon">
+                        <span class="material-icons-sharp">
+                            volume_up
+                        </span>
+                    </div>
+                    <div class="content">
+                        <div class="info">
+                            <h3>Update_1</h3>
+                            <small class="text_muted">
+                                {update_time}
+                            </small>
+                        </div>
+                        <span class="material-icons-sharp">
+                            more_vert
+                        </span>
+                    </div>
+                </div>
+
+                <div class="notification deactive">
+                    <div class="icon">
+                        <span class="material-icons-sharp">
+                            edit
+                        </span>
+                    </div>
+                    <div class="content">
+                        <div class="info">
+                            <h3>Update_2</h3>
+                            <small class="text_muted">
+                                {update_time}
+                            </small>
+                        </div>
+                        <span class="material-icons-sharp">
+                            more_vert
+                        </span>
+                    </div>
+                </div>
+
+                <div class="notification add-reminder">
+                    <div>
+                        <span class="material-icons-sharp">
+                            add
+                        </span>
+                        <h3>Add Reminder</h3>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+        {% endblock %}
+        </div>
+    {% block jscripts %}
+    <script src="{%static 'JavaScript/index.js'%}"></script>
+    <script src="{%static 'JavaScript/orders.js'%}"></script>
+    {% endblock %}
+</body>
+</html>

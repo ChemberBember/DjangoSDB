@@ -1,0 +1,66 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block main %}
+<h1>Profile</h1>
+            <div class="profileblock">
+                <div class="profilesettings">
+                    <div class="profilephoto">
+                        <img src="{%static 'images/userunknown.jpg'%}">
+                    </div>
+                    <div class="profileusername">
+                        {{request.user.username}}
+                    </div>
+
+                    <div class="login-card">
+        <h3>Enter your credentials</h3>
+
+        <form class="login-form" method="post">
+            {% csrf_token %}
+            {{form.Fullname}}
+            {{form.UserGitLink}}
+            {{form.UserGroup}}
+
+            <button type="submit">SUBMIT</button>
+        </form>
+                    </div>
+
+
+                </div>
+                <div class="profilepreview">
+                    <div class="profilephoto">
+                        <img src="{%static 'images/userunknown.jpg'%}">
+                    </div>
+                    <div class="profileusername">
+                        {{request.user.username}}
+                    </div>
+                    <div class="profileinfo">
+                        <div class="info-block">
+                            <a class="halfvisible">
+                                Fullname
+                            </a>
+                        </div>
+                        <div class="profilename">
+                                Some random name
+                            </div>
+                        <div class="info-block">
+                                    <a class="halfvisible">
+                                        GitHub link
+                                    </a>
+                                </div>
+                        <div class="githubprofile">
+                                    Some git hub link
+                        </div>
+                         <div class="info-block">
+                                    <a class="halfvisible">
+                                        Group
+                                    </a>
+                                </div>
+                        <div class="githubprofile">
+                                    CP-203
+                        </div>
+<!--                        <img src="{%static 'images/nerd.png'%}">-->
+                </div>
+            </div>
+            </div>
+{% endblock %}

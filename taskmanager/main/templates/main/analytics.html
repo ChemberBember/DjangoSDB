@@ -1,0 +1,96 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block main %}
+    <h1>Analytics</h1>
+            <!-- Analyses -->
+            <div class="analyse">
+                <div class="sales">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Green Scale</h3>
+                            <h1>{Values_1}</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="percentage">
+                                <p>+81%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="visits">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Red Scale</h3>
+                            <h1>{Values_2}</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="percentage">
+                                <p>-48%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="searches">
+                    <div class="status">
+                        <div class="info">
+                            <h3>Blue Scale</h3>
+                            <h1>{Value_3}</h1>
+                        </div>
+                        <div class="progresss">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="percentage">
+                                <p>+21%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="recent-orders">
+                <h2>Data Base</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Link</th>
+                            <th>Progress</th>
+                            <th>Status</th>
+                            <th>Group</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                    <tr>
+                        {% for user in users %}
+                    <td>
+                        {{ user.username }} {{ user.email }}
+                    </td>
+                        {% endfor %}
+                        <td>
+                            Random bla
+                        </td>
+                        <td>
+                            2
+                        </td>
+                        <td>
+                            3
+                        </td>
+                        <td>
+                            4
+                        </td>
+                        <td>
+                            5
+                        </td>
+                    </tbody>
+                </table>
+                <a href="#">Show All</a>
+            </div>
+{% endblock %}
