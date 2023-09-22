@@ -65,16 +65,27 @@ class ChangeUser(CreateView):
 def ChangeUserF(request):
     if request.method == 'POST':
         form = UserChangeForm(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-            data['id'] = request.user.id
-            print(data)
 
-            return redirect('login')
+        if form.is_valid():
+
+            form.UserF = request.user.id
+            cldata = form.cleaned_data
+            data = UserData()
+            data.UserF = User.objects.get(id=request.user.id)
+            data.UserGroup = cldata['UserGroup']
+            data.UserGitLink = cldata['UserGitLink']
+            data.Fullname = cldata['Fullname']
+            print(data)
+            print(data.Fullname)
+            data.save()
+        return redirect('login')
     else:
+        userdata = UserData.objects.all()
+        print(userdata)
+        print(userdata[1])
         form = UserChangeForm
         data = 0
-    return render(request, 'main/users.html', {'form': form, 'data': data})
+    return render(request, 'main/users.html', {'form': form, 'data': data, 'userdata': userdata})
 
 
 

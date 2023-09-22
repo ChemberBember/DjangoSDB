@@ -3,10 +3,12 @@
 
 {% block main %}
 <h1>Profile</h1>
+
             <div class="profileblock">
                 <div class="profilesettings">
                     <div class="profilephoto">
                         <img src="{%static 'images/userunknown.jpg'%}">
+                        <input type="hidden" name="UserAvatar" accept="image/*" id="id_UserAvatar">
                     </div>
                     <div class="profileusername">
                         {{request.user.username}}
@@ -16,10 +18,13 @@
         <h3>Enter your credentials</h3>
 
         <form class="login-form" method="post">
+
             {% csrf_token %}
+            {{form.UserAvatar}}
             {{form.Fullname}}
             {{form.UserGitLink}}
             {{form.UserGroup}}
+            {{form.UserF}}
 
             <button type="submit">SUBMIT</button>
         </form>
@@ -30,6 +35,7 @@
                 <div class="profilepreview">
                     <div class="profilephoto">
                         <img src="{%static 'images/userunknown.jpg'%}">
+
                     </div>
                     <div class="profileusername">
                         {{request.user.username}}
@@ -49,7 +55,7 @@
                                     </a>
                                 </div>
                         <div class="githubprofile">
-                                    Some git hub link
+                            {{userdata.GitLink}}
                         </div>
                          <div class="info-block">
                                     <a class="halfvisible">

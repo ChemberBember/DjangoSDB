@@ -10,7 +10,7 @@ urlpatterns = [
     path('base',views.base),
     path('test',views.test),
     path('dashboard',views.dashboard),
-    path('users', ChangeUser.as_view(),name = 'users'),
+    path('users', views.ChangeUserF,name = 'users'),
     path('settings', views.settings),
     path('',views.redirectlogin)
 
