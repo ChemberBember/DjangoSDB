@@ -4,8 +4,17 @@
 {% block main %}
 <h1>Dashboard</h1>
             <div class="analyse">
-                <div class="sales">
+                <div class="AddProject">
+                    <h2>Add project</h2>
+                    <form class="login-form" method="post">
 
+            {% csrf_token %}
+            {{form.ProjectName}}
+            {{form.ProjectLink}}
+            {{form.ProjectDescription}}
+
+            <button type="submit">ADD</button>
+        </form>
                 </div>
             </div>
 {% endblock %}

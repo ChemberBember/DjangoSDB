@@ -47,7 +47,7 @@
                             </a>
                         </div>
                         <div class="profilename">
-                                Some random name
+                            {{userdata.Fullname}}
                             </div>
                         <div class="info-block">
                                     <a class="halfvisible">
@@ -55,7 +55,7 @@
                                     </a>
                                 </div>
                         <div class="githubprofile">
-                            {{userdata.GitLink}}
+                            <a href = {{userdata.UserGitLink}}>{{userdata.UserGitLink}}</a>
                         </div>
                          <div class="info-block">
                                     <a class="halfvisible">
@@ -63,7 +63,7 @@
                                     </a>
                                 </div>
                         <div class="githubprofile">
-                                    CP-203
+                            {{userdata.UserGroup}}
                         </div>
 <!--                        <img src="{%static 'images/nerd.png'%}">-->
                 </div>

@@ -412,6 +412,16 @@ main .analyse svg circle{
     transform: translate(5px, 5px);
 }
 
+main .AddProject > h2 {
+    display:flex;
+    justify-content:center;
+    margin-bottom:40px;
+
+
+}
+
+
+
 main .analyse .sales svg circle{
     stroke: var(--color-success);
     stroke-dashoffset: -30;

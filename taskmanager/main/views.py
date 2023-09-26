@@ -1,6 +1,6 @@
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
@@ -67,35 +67,70 @@ def ChangeUserF(request):
         form = UserChangeForm(request.POST)
 
         if form.is_valid():
-
-            form.UserF = request.user.id
             cldata = form.cleaned_data
-            data = UserData()
-            data.UserF = User.objects.get(id=request.user.id)
-            data.UserGroup = cldata['UserGroup']
-            data.UserGitLink = cldata['UserGitLink']
-            data.Fullname = cldata['Fullname']
-            print(data)
-            print(data.Fullname)
-            data.save()
-        return redirect('login')
+            try:
+                form.UserF = request.user.id
+
+                data = UserData()
+                data.UserF = User.objects.get(id=request.user.id)
+
+
+                data.UserGroup = cldata['UserGroup']
+                data.UserGitLink = cldata['UserGitLink']
+                data.Fullname = cldata['Fullname']
+                data.Usernick = request.user.username
+                data.save()
+            except:
+
+                my_model = get_object_or_404(UserData, pk=request.user.username)
+                form = UserChangeForm(request.POST, instance=my_model)
+
+
+                data = form
+                data.UserF = User.objects.get(id=request.user.id)
+                data.UserGroup = cldata['UserGroup']
+                data.UserGitLink = cldata['UserGitLink']
+                data.Fullname = cldata['Fullname']
+                data.save()
+            return redirect('login')
     else:
-        userdata = UserData.objects.all()
-        print(userdata)
-        print(userdata[1])
-        form = UserChangeForm
+        try:
+            userdata = UserData.objects.get(pk=request.user.username)
+        except:
+            userdata = 0
+
+        form = UserChangeForm(request.POST)
+        try:
+            form.fields['UserGroup'].widget.attrs['value'] = userdata.UserGroup
+            form.fields['UserGitLink'].widget.attrs['value'] = userdata.UserGitLink
+            form.fields['Fullname'].widget.attrs['value'] = userdata.Fullname
+        except:
+            pass
+        print('Виджеты : &$#&@@@ :',form.fields['UserGroup'].widget.attrs)
         data = 0
-    return render(request, 'main/users.html', {'form': form, 'data': data, 'userdata': userdata})
+
+    return render(request, 'main/users.html', {'form': form, 'data': data,'userdata' : userdata })
 
 
+def AddProject(request):
+    form = CreateProjectForm(request.POST)
+    if request.method == 'POST':
+        form = CreateProjectForm(request.POST)
+
+        if form.is_valid():
+            data = form.cleaned_data()
+
+            project = Projects()
+            project.UserF = User.objects.get(id=request.user.id)
+            project.ProjectName = data['ProjectName']
+            project.ProjectDescription = data['ProjectDescription']
+            project.ProjectLink = data['ProjectLink']
+            project.save()
+    return render(request,'main/dashboard.html',{'form':form})
 
 def testable(request):
     Users = User.objects.all()
     return render(request, 'main/analytics.html',{'users':Users})
 
 def redirectlogin(request):
-    test_1()
-    print('------')
-    test_2()
-    print('------')
     return redirect('login')

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import UserData
+from .models import UserData, Projects
 from django.shortcuts import render
 
 
@@ -37,10 +37,20 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = UserData
-        fields = ('Fullname','UserGitLink','UserGroup','UserAvatar')
+        fields = ('Fullname','UserGitLink','UserGroup')
+
         widgets = {
             'Fullname': forms.TextInput(attrs={'placeholder': "Fullname"}),
             'UserGitLink': forms.TextInput(attrs={'placeholder': "Git-Hub Link"}),
             'UserGroup': forms.TextInput(attrs={'placeholder': "Group"}),
-            'UserAvatar': forms.FileInput(attrs={'type':'hidden'})
+        }
+
+class CreateProjectForm(forms.ModelForm):
+    class Meta:
+        model = Projects
+        fields = ('ProjectName', 'ProjectDescription','ProjectLink')
+        widgets = {
+            "ProjectName": forms.TextInput(attrs={'placeholder': 'Project name'}),
+            "ProjectDescription": forms.TextInput(attrs={'placeholder': "Description"}),
+            "ProjectLink": forms.URLInput(attrs={'placeholder':'GitHub project link'})
         }
