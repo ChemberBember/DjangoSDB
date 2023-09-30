@@ -37,12 +37,13 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = UserData
-        fields = ('Fullname','UserGitLink','UserGroup')
+        fields = ('Fullname','UserGitLink','UserGroup','UserAvatar')
 
         widgets = {
             'Fullname': forms.TextInput(attrs={'placeholder': "Fullname"}),
             'UserGitLink': forms.TextInput(attrs={'placeholder': "Git-Hub Link"}),
             'UserGroup': forms.TextInput(attrs={'placeholder': "Group"}),
+
         }
 
 class CreateProjectForm(forms.ModelForm):

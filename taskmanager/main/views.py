@@ -8,7 +8,7 @@ from.forms import *
 from django.contrib.auth.mixins import  LoginRequiredMixin
 from django.views.generic import CreateView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-
+from .functions import *
 from .tests import *
 
 
@@ -69,11 +69,9 @@ def ChangeUserF(request):
         if form.is_valid():
             cldata = form.cleaned_data
             try:
-                form.UserF = request.user.id
-
+                print(cldata['UserAvatar'])
                 data = UserData()
                 data.UserF = User.objects.get(id=request.user.id)
-
 
                 data.UserGroup = cldata['UserGroup']
                 data.UserGitLink = cldata['UserGitLink']
@@ -81,18 +79,18 @@ def ChangeUserF(request):
                 data.Usernick = request.user.username
                 data.save()
             except:
-
+                print(cldata['UserAvatar'])
                 my_model = get_object_or_404(UserData, pk=request.user.username)
                 form = UserChangeForm(request.POST, instance=my_model)
-
 
                 data = form
                 data.UserF = User.objects.get(id=request.user.id)
                 data.UserGroup = cldata['UserGroup']
                 data.UserGitLink = cldata['UserGitLink']
                 data.Fullname = cldata['Fullname']
+                data.UserAvatar = request.FILES['UserAvatar']
                 data.save()
-            return redirect('login')
+            return redirect('users')
     else:
         try:
             userdata = UserData.objects.get(pk=request.user.username)
@@ -104,9 +102,10 @@ def ChangeUserF(request):
             form.fields['UserGroup'].widget.attrs['value'] = userdata.UserGroup
             form.fields['UserGitLink'].widget.attrs['value'] = userdata.UserGitLink
             form.fields['Fullname'].widget.attrs['value'] = userdata.Fullname
+            form.fields['UserAvatar'].widget.attrs['value'] = userdata.UserAvatar
+
         except:
             pass
-        print('Виджеты : &$#&@@@ :',form.fields['UserGroup'].widget.attrs)
         data = 0
 
     return render(request, 'main/users.html', {'form': form, 'data': data,'userdata' : userdata })
@@ -118,19 +117,23 @@ def AddProject(request):
         form = CreateProjectForm(request.POST)
 
         if form.is_valid():
-            data = form.cleaned_data()
+            data = form.cleaned_data
 
             project = Projects()
-            project.UserF = User.objects.get(id=request.user.id)
+            project.Usernick = UserData.objects.get(pk = request.user.username)
             project.ProjectName = data['ProjectName']
             project.ProjectDescription = data['ProjectDescription']
             project.ProjectLink = data['ProjectLink']
             project.save()
+            return redirect('analytics')
     return render(request,'main/dashboard.html',{'form':form})
 
 def testable(request):
-    Users = User.objects.all()
-    return render(request, 'main/analytics.html',{'users':Users})
+    projects = Projects.objects.all()
+    userdata = UserData.objects
+
+    return render(request, 'main/analytics.html',{'projects': projects, 'userdata': userdata})
 
 def redirectlogin(request):
+
     return redirect('login')

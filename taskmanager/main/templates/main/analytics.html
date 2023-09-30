@@ -59,36 +59,33 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>ProjectName</th>
                             <th>Link</th>
-                            <th>Progress</th>
-                            <th>Status</th>
+                            <th>Name</th>
+                            <th>Date</th>
                             <th>Group</th>
                         </tr>
 
                     </thead>
                     <tbody>
+                    {% for project in projects%}
                     <tr>
-                        {% for user in users %}
                     <td>
-                        {{ user.username }} {{ user.email }}
+                        {{ project.ProjectName }}
+                    </td>
+                        <td>
+                            <a href = '{{project.ProjectLink}}'>{{project.ProjectLink}}</a>
+                        </td>
+                    <td>
+                        {{project.Usernick.Fullname}}
+                    </td>
+                    <td>
+                        {{project.ProjectDate}}
+                    </td>
+                    <td>
+                        {{project.Usernick.UserGroup}}
                     </td>
                         {% endfor %}
-                        <td>
-                            Random bla
-                        </td>
-                        <td>
-                            2
-                        </td>
-                        <td>
-                            3
-                        </td>
-                        <td>
-                            4
-                        </td>
-                        <td>
-                            5
-                        </td>
                     </tbody>
                 </table>
                 <a href="#">Show All</a>

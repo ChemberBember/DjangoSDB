@@ -605,6 +605,11 @@ main .recent-orders a{
     transition: all 0.375s;
 }
 
+.login-form > UserAvatar{
+color FFF;
+}
+
+
 .login-form > a:hover{
     color: #10449A;
 }
